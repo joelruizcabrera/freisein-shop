@@ -1,0 +1,61 @@
+<?php
+namespace Deployer;
+
+require 'deployer-shopware6.php';
+require 'contrib/cachetool.php';
+
+// Deactivate tracking
+set('allow_anonymous_stats', false);
+
+// Project name
+set('application', '');
+
+// Project repository
+set('repository', '');
+
+// Opcache setting
+// Also set a web_url on host setting is required
+set('cachetool_args', '--web --web-path={{deploy_path}}/current/public --web-url={{web_url}}');
+before('deploy:vendors', 'cachetool:clear:opcache');
+after('deploy:symlink', 'cachetool:clear:opcache');
+
+// Hosts
+host('stage')
+    ->setHostname('')
+    ->setPort(22)
+    ->setRemoteUser('')
+    ->setIdentityFile('~/.ssh/id_rsa')
+    ->setForwardAgent(true)
+    ->setDeployPath('')
+    ->set('branch', 'develop')
+    ->set('writable_mode', 'chmod')
+    ->set('http_user', '')
+    //->set('bin/php', '')
+    ->set('bin/composer', function () {return '{{bin/php}} {{release_path}}/composer';})
+    ->set('keep_releases', 3)
+    ->set('web_url', '')
+    ->setSshArguments([
+        '-o UserKnownHostsFile=/dev/null',
+        '-o StrictHostKeyChecking=no'
+    ])
+;
+
+host('production')
+    ->setHostname('')
+    ->setPort(22)
+    ->setRemoteUser('')
+    ->setIdentityFile('~/.ssh/id_rsa')
+    ->setForwardAgent(true)
+    ->setDeployPath('')
+    ->set('branch', 'master')
+    ->set('writable_mode', 'chmod')
+    ->set('http_user', '')
+    //->set('bin/php', '')
+    ->set('bin/composer', function () {return '{{bin/php}} {{release_path}}/composer';})
+    ->set('keep_releases', 3)
+    ->set('web_url', '')
+    ->setSshArguments([
+        '-o UserKnownHostsFile=/dev/null',
+        '-o StrictHostKeyChecking=no'
+    ])
+;

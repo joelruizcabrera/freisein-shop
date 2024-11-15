@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Shopware\Production\Command\HbHClearOpCacheCommand">
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHCreateCmsBlockCommand">
+            <argument>%kernel.project_dir%</argument>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHCreateCmsElementCommand">
+            <argument>%kernel.project_dir%</argument>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHCreatePluginCommand">
+            <argument>%kernel.project_dir%</argument>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHPluginsActivateAllCommand">
+            <argument type="service" id="plugin.repository"/>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHPluginsMigrateAllCommand">
+            <argument type="service" id="plugin.repository"/>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHPluginsUpgradeAllCommand">
+            <argument type="service" id="plugin.repository"/>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHSingleBundleDumpCommand">
+            <argument type="service" id="Shopware\Core\Framework\Plugin\BundleConfigGenerator"/>
+            <argument>%kernel.project_dir%</argument>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHSystemInstallCommand">
+            <argument>%kernel.project_dir%</argument>
+            <argument type="service" id="Shopware\Core\Maintenance\System\Service\SetupDatabaseAdapter"/>
+            <argument type="service" id="Shopware\Core\Maintenance\System\Service\DatabaseConnectionFactory"/>
+            <argument type="service" id="sales_channel.repository"/>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="Shopware\Production\Command\HbHThemeCompileCommand">
+            <argument type="service" id="Shopware\Storefront\Theme\ThemeService"/>
+            <argument type="service" id="Shopware\Storefront\Theme\ConfigLoader\DatabaseAvailableThemeProvider"/>
+
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>

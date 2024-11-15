@@ -1,0 +1,24 @@
+monolog:
+
+services:
+    Monolog\Processor\UidProcessor:
+        autoconfigure: false
+        tags:
+            - { name: monolog.processor }
+
+    Shopware\Production\Logging\Monolog\Processor\RemoveSensitiveDataProcessor:
+        autoconfigure: false
+        tags:
+            - { name: monolog.processor }
+
+shopware:
+    logger:
+        # Set the max number of log files before the oldest gets deleted
+        file_rotation_count: 14
+        # All listed exceptions are excluded from logging
+        exclude_exception:
+            - League\OAuth2\Server\Exception\OAuthServerException
+            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+            - Shopware\Core\Checkout\Cart\Exception\LineItemNotFoundException
+            - Shopware\Core\Content\Media\Exception\DuplicatedMediaFileNameException
+            - Shopware\Core\Content\Media\Exception\IllegalFileNameException

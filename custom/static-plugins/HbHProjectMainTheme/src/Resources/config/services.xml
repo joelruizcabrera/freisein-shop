@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Languages Service -->
+        <service id="HbH\ProjectMainTheme\Resources\snippet\en_GB\SnippetFile_en_GB" public="true">
+            <tag name="shopware.snippet.file"/>
+        </service>
+        <service id="HbH\ProjectMainTheme\Resources\snippet\de_DE\SnippetFile_de_DE" public="true">
+            <tag name="shopware.snippet.file"/>
+        </service>
+        <!-- End Languages Service -->
+
+        <!-- Product Parent Subscriber Service -->
+        <service id="HbH\ProjectMainTheme\Subscriber\Product\ParentProductSubscriber">
+            <argument type="service" id="sales_channel.product.repository"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <!-- End Product Parent Subscriber Service -->
+
+        <!-- Twig Extensions -->
+        <service id="HbH\ProjectMainTheme\Twig\SortByCustomOrder" public="true">
+            <tag name="twig.extension"/>
+        </service>
+        <!-- END Twig Extensions -->
+
+        </services>
+</container>

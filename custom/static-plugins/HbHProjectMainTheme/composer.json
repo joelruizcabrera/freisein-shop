@@ -1,0 +1,23 @@
+{
+    "name": "hbh/project-main-theme",
+    "version": "v1.0.1",
+    "description": "HbH Project Main Theme",
+    "type": "shopware-platform-plugin",
+    "authors": [
+        {
+            "name": "Hob by Horse GmbH"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "HbH\\ProjectMainTheme\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "HbH\\ProjectMainTheme\\HbHProjectMainTheme",
+        "label": {
+            "de-DE": "Hob by Horse - Main Theme",
+            "en-GB": "Hob by Horse - Main Theme"
+        }
+    }
+}

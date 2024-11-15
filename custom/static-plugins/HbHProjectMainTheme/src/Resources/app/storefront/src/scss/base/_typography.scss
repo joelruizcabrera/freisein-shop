@@ -1,0 +1,25 @@
+/* HBH standard - font implementation */
+
+//@font-face {
+//    font-family: 'FontName';
+//    font-display: swap;
+//    src: url('/bundles/hbhprojectmaintheme/fonts/{{pathToFile}}/fileName.ttf') format('truetype');
+//}
+
+@font-face {
+    font-family: 'Ubuntu-Regular';
+    font-display: swap;
+    src: url('/bundles/hbhprojectmaintheme/fonts/ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu-Medium';
+    font-display: swap;
+    src: url('/bundles/hbhprojectmaintheme/fonts/ubuntu/Ubuntu-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu-Bold';
+    font-display: swap;
+    src: url('/bundles/hbhprojectmaintheme/fonts/ubuntu/Ubuntu-Bold.ttf') format('truetype');
+}

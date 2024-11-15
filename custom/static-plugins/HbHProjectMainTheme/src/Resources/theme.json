@@ -1,0 +1,21 @@
+{
+  "name": "HbHProjectMainTheme",
+  "author": "Hob by Horse GmbH",
+  "views": [
+     "@Storefront",
+     "@Plugins",
+     "@HbHProjectMainTheme"
+  ],
+    "style": [
+        "app/storefront/src/scss/utils/_overrides.scss",
+        "@Storefront",
+        "app/storefront/src/scss/base.scss"
+    ],
+    "script": [
+        "@Storefront",
+        "app/storefront/dist/storefront/js/hb-h-project-main-theme.js"
+    ],
+    "asset": [
+        "app/storefront/src/assets"
+    ]
+}

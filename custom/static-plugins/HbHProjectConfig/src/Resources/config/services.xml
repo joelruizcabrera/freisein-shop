@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="./services/config.xml"/>
+    </imports>
+
+    <services>
+        <service id="HbH\ProjectConfig\Command\ResendOrderConfirmationMailCommand">
+            <argument type="service" id="Shopware\Core\Content\Flow\Dispatching\Action\SendMailAction"/>
+            <argument type="service" id="Shopware\Core\Checkout\Cart\Order\OrderConverter"/>
+            <argument type="service" id="order.repository"/>
+            <argument type="service" id="mail_template.repository"/>
+            <argument type="service" id="Shopware\Core\Content\Flow\Dispatching\FlowFactory"/>
+
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>

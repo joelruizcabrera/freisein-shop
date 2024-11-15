@@ -1,0 +1,5 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{% block layout_head_meta_tags_robots %}
+{% if config('HbHProjectConfig.config.disableSearchEngineIndexing') %}noindex,nofollow{% else %}{{ parent() }}{% endif %}
+{% endblock %}

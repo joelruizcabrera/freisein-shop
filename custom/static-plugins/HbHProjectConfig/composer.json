@@ -1,0 +1,23 @@
+{
+    "name": "hbh/project-config",
+    "version": "v1.0.3",
+    "description": "Contains all project specific configurations.",
+    "type": "shopware-platform-plugin",
+    "authors": [
+        {
+            "name": "Hob by Horse GmbH"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "HbH\\ProjectConfig\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "HbH\\ProjectConfig\\HbHProjectConfig",
+        "label": {
+            "de-DE": "Hob by Horse - Projektkonfiguration",
+            "en-GB": "Hob by Horse - Project config"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+/*
+Override variable defaults
+==================================================
+This file is used to override default SCSS variables from the Shopware Storefront or Bootstrap.
+
+You can find the Standard Variables at
+'vendor/shopware/storefront/Resources/app/storefront/src/scss/skin/shopware/abstract/variables'
+
+Because of the !default flags, theme variable overrides have to be declared beforehand.
+https://getbootstrap.com/docs/4.0/getting-started/theming/#variable-defaults
+*/
+
+// HBH standard - input placeholder color
+$input-placeholder-color: grey;

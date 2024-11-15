@@ -1,0 +1,24 @@
+{
+    "name": "hbh/project-cms",
+    "description": "Shopware 6 CMS collection",
+    "version": "v1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hob by Horse GmbH"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "HbH\\ProjectCms\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "HbH\\ProjectCms\\HbHProjectCms",
+        "label": {
+            "de-DE": "Hob by Horse - CMS Sammlung",
+            "en-GB": "Hob by Horse - CMS Collection"
+        }
+    }
+}

@@ -1,0 +1,122 @@
+{
+    "license": "proprietary",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Shopware\\Production\\": "src/"
+        }
+    },
+    "require": {
+        "composer-runtime-api": "^2.0",
+        "frosh/adminer-platform": "2.1.1",
+        "frosh/development-helper": "1.0.3",
+        "frosh/frosh-platform-template-mail": "3.0.5",
+        "frosh/lazy-sizes": "3.1.0",
+        "frosh/platform-html-minify": "2.1.0",
+        "frosh/tools": "2.4.1",
+        "hbh/project-cms": "*",
+        "hbh/project-config": "*",
+        "hbh/project-main-theme": "*",
+        "marcj/topsort": "2.0.0",
+        "shopware/administration": "6.6.8.2",
+        "shopware/core": "6.6.8.2",
+        "shopware/elasticsearch": "6.6.8.2",
+        "shopware/storefront": "6.6.8.2",
+        "symfony/flex": "2.4.7"
+    },
+    "require-dev": {
+        "deployer/deployer": "7.3.3",
+        "phpstan/extension-installer": "1.4.3",
+        "phpstan/phpstan": "1.12.3",
+        "phpstan/phpstan-deprecation-rules": "1.2.1",
+        "psalm/phar": "5.26.1",
+        "symplify/coding-standard": "12.2.3",
+        "symplify/easy-coding-standard": "12.3.5",
+        "shopware/dev-tools": "1.3.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.die-etagen.de/etagen/standards/shopware/sw6-plugins/hbhfoundation.git"
+        },
+        {
+            "type": "path",
+            "url": "custom/plugins/*",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "custom/plugins/*/packages/*",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "custom/static-plugins/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "phpstan/extension-installer": true
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "gitlab-domains": [
+            "git.die-etagen.de"
+        ]
+    },
+    "scripts": {
+        "auto-scripts": {
+            "assets:install": "symfony-cmd"
+        },
+        "pre-install-cmd": [
+            "[ ! -f vendor/autoload.php ] || $PHP_BINARY -d memory_limit=-1 bin/console system:update:prepare"
+        ],
+        "pre-update-cmd": [
+            "[ ! -f vendor/autoload.php ] || $PHP_BINARY -d memory_limit=-1 bin/console system:update:prepare"
+        ],
+        "post-install-cmd": [
+            "@auto-scripts",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console system:update:finish",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console plugin:refresh",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console cache:clear",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console hbh:plugins:activate-all",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console hbh:plugins:upgrade-all",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console hbh:plugins:migrate-all",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console assets:install --force",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console theme:compile",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console scheduled-task:register"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console system:update:finish",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console plugin:refresh",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console cache:clear",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console hbh:plugins:activate-all",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console hbh:plugins:upgrade-all",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console hbh:plugins:migrate-all",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console assets:install --force",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console theme:compile",
+            "[ ! -f install.lock ] || $PHP_BINARY -d memory_limit=-1 bin/console scheduled-task:register"
+        ]
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": true,
+            "endpoint": [
+                "https://raw.githubusercontent.com/shopware/recipes/flex/main/index.json",
+                "flex://defaults"
+            ]
+        }
+    }
+}

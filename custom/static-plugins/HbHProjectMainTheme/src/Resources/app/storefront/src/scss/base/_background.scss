@@ -1,0 +1,22 @@
+.bg {
+    &-green {
+        $background: #c4cb80;
+        $colorName: "green";
+        @include create-background($colorName, $background);
+    }
+    &-blue {
+        $background: #B2CDD9;
+        $colorName: "blue";
+        @include create-background($colorName, $background);
+    }
+    &-brown {
+        $background: #CEAC83;
+        $colorName: "brown";
+        @include create-background($colorName, $background);
+    }
+    &-orange {
+        $background: #F5B479;
+        $colorName: "orange";
+        @include create-background($colorName, $background);
+    }
+}

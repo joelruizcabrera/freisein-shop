@@ -1,0 +1,31 @@
+@mixin define-color($title, $color) {
+    --#{$title}-h: #{hue($color)};
+    --#{$title}-l: #{lightness($color)};
+    --#{$title}-s: #{saturation($color)};
+    --#{$title}-a: #{alpha($color)};
+}
+
+@mixin create-background($colorName, $background) {
+    @include define-color($colorName, $background);
+    background: color($colorName);
+    --background-hsla: #{color($colorName)};
+    --background-hex: #{$background};
+    --background-gradient: radial-gradient(
+            hsl(var(--#{$colorName}-h), var(--#{$colorName}-s), var(--#{$colorName}-l)),
+            hsl(var(--#{$colorName}-h), var(--#{$colorName}-s), calc(var(--#{$colorName}-l) - 5%)),
+            hsl(var(--#{$colorName}-h), var(--#{$colorName}-s), calc(var(--#{$colorName}-l) - 10%)),
+            hsl(var(--#{$colorName}-h), var(--#{$colorName}-s), calc(var(--#{$colorName}-l) - 15%))
+    );
+    &.bg-radial {
+        background: var(--background-gradient) !important;
+    }
+}
+
+@function color($title, $hue: 0deg, $lightness: 0%, $saturation: 0%, $alpha: 0) {
+    @return hsla(
+            calc(var(--#{$title}-h) + #{$hue}),
+            calc(var(--#{$title}-s) + #{$saturation}),
+            calc(var(--#{$title}-l) + #{$lightness}),
+            calc(var(--#{$title}-a) + #{$alpha}),
+    );
+}

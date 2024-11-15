@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/master/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>General</title>
+        <title lang="de-DE">Allgemein</title>
+
+        <input-field type="bool">
+            <name>disableSearchEngineIndexing</name>
+            <label>Disable search engine indexing?</label>
+            <label lang="de-DE">Indexierung durch Suchmaschinen deaktivieren?</label>
+            <required>false</required>
+            <defaultValue>false</defaultValue>
+        </input-field>
+    </card>
+</config>

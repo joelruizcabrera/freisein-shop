@@ -1,0 +1,18 @@
+# Using the webupdater will overwrite this file. Create a second file z-shopware.yaml to override the config
+# https://developer.shopware.com/docs/guides/hosting/performance/performance-tweaks.html
+shopware:
+    auto_update:
+        # Disables the auto updater in the UI
+        enabled: false
+    admin_worker:
+        # Disables the admin worker
+       enable_admin_worker: false
+    mail:
+        # Disables writing example mail into the database when sending a mail.
+        update_mail_variables_on_send: false
+    # Disables the increment storage (https://developer.shopware.com/docs/guides/hosting/performance/increment.html)
+    increment:
+        user_activity:
+            type: 'array'
+        message_queue:
+            type: 'array'

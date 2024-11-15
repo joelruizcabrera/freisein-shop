@@ -1,0 +1,13 @@
+{% sw_extends "@Storefront/storefront/layout/sidebar/category-navigation.html.twig" %}
+
+{% block layout_navigation_categories %}
+    {% set navigationMaxDepth = 5 %}
+
+    {% if not level %}
+        {% set level = 0 %}
+    {% endif %}
+
+    {% block layout_navigation_categories_list %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,10 @@
+storefront:
+    reverse_proxy:
+        enabled: true
+        ban_method: "BAN"
+        # This needs to point to your varnish hosts
+        hosts: [ "http://127.0.0.1" ]
+        # Max parallel invalidations at same time for a single worker
+        max_parallel_invalidations: 3
+        # Redis Storage for the HTTP cache tags
+        redis_url: "redis://127.0.0.1:6379"
