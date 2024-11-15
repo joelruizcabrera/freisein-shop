@@ -1,0 +1,99 @@
+# Override this file for local changes in ".lando.local.yml" see https://docs.lando.dev/config/lando.html#override-file
+name: changeme-sw
+recipe: symfony
+config:
+  webroot: public
+  php: '8.2'
+  via: apache:2.4
+  database: mysql:8.0
+  cache: redis
+  xdebug: true
+proxy:
+  appserver:
+    - shopware.dev.die-etagen.de
+  adminer:
+    - adminer.lndo.site
+# Add additional services
+services:
+  appserver:
+    scanner: false
+    build_as_root:
+      - apt-get update
+      - apt-get install -y ca-certificates curl gnupg
+      - mkdir -p /etc/apt/keyrings
+      - curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+      - echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+      - apt-get update
+      - apt-get install -y nodejs
+      - apt-get install -y libxslt-dev xauth xvfb libasound2 libxss1 libnss3 libgconf-2-4 libnotify-dev libgtk2.0-0 libgtk-3-0 libgbm-dev
+      - apt-get install -y jq
+      - docker-php-ext-install sockets
+      - docker-php-ext-install xsl
+      - docker-php-ext-install xml
+    run:
+      - |
+        if test -f "/app/.lando_alias"; then
+            cat /app/.lando_alias >> ~/.bashrc
+        fi
+    overrides:
+      ports:
+        - "8080:8080"
+        - "9998:9998"
+      environment:
+        XDEBUG_MODE:
+  cache:
+    type: redis
+    persist: true
+  pma:
+    type: phpmyadmin
+    hosts:
+      - database
+  database:
+    creds:
+      user: homestead
+      password: secret
+      database: lando_sw
+  mailhog:
+    type: mailhog
+    portforward: true
+    hogfrom:
+      - appserver
+  adminer:
+    type: compose
+    services:
+      image: dehy/adminer
+      command: /bin/s6-svscan /etc/services.d
+    portforward: true
+# Add additional tooling
+tooling:
+  redis-cli:
+    service: cache
+  node:
+    service: node
+  npm:
+    service: node
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for Apache.
+    cmd: rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && docker-php-ext-enable xdebug && echo 'xdebug.mode=debug' > z && mv z /usr/local/etc/php/conf.d/zzz-lando-xdebug-profiling.ini && service apache2 reload && echo "Xdebug enabled"
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for Apache.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && rm /usr/local/etc/php/conf.d/zzz-lando-xdebug-profiling.ini && rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload && echo "Xdebug disabled"
+    user: root
+  # https://github.com/lando/lando/issues/1954
+  # Lando setzt "XDEBUG_MODE" als ENV-Variable mit dem Wert "debug", daher überschreibt das
+  # alles andere: https://docs.lando.dev/core/v3/env.html
+  # Problem: Ordner ".xdebug" wird als root angelegt
+  # xDebug-Extension kann immer aktiv sein, nur der Mode müsste geändert werden
+  profiling-on:
+    service: appserver
+    description: Enable XDebug profiling for Apache.
+    cmd: "docker-php-ext-enable xdebug && mkdir -p /app/.xdebug && echo 'xdebug.mode=profile' > z && echo 'xdebug.start_with_request=yes' >> z && echo 'xdebug.output_dir=/app/.xdebug' >> z && echo 'xdebug.profiler_output_name=cachegrind.out.%u.%p.%r.%s' >> z && mv z /usr/local/etc/php/conf.d/zzz-lando-xdebug-profiling.ini && service apache2 reload"
+    user: root
+  profiling-off:
+    service: appserver
+    description: Disable XDebug profiling for Apache.
+    cmd: "rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && rm /usr/local/etc/php/conf.d/zzz-lando-xdebug-profiling.ini && service apache2 reload"
+    user: root

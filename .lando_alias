@@ -1,0 +1,22 @@
+alias tc="bin/console theme:compile"
+alias cc="bin/console cache:clear"
+alias bc="bin/console theme:compile && bin/console cache:clear"
+
+alias bs="bin/build-storefront.sh && bin/console cache:clear"
+alias ba="bin/build-administration.sh && bin/console cache:clear"
+
+alias ai="bin/console asset:install && bin/console theme:compile && bin/console cache:clear"
+
+alias pr="bin/console plugin:refresh"
+alias pc="bin/console plugin:create"
+alias pa="bin/console plugin:activate"
+alias pd="bin/console plugin:deactivate"
+
+alias ci="composer install"
+alias cr="composer require"
+alias crm="composer remove"
+alias cu="composer update"
+
+alias ebc="bin/console hbh:theme:compile"
+alias ebs="bin/hbh-build-storefront.sh"
+alias eba="bin/hbh-build-administration.sh"
